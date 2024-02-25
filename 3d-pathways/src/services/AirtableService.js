@@ -4,7 +4,7 @@ import axios from 'axios';
 const baseURL = `https://api.airtable.com/v0/appErImxpeRDom8je`;
 const config = {
   headers: {
-    Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`
+    Authorization: `Bearer ${process.env.VUE_APP_AIRTABLE_API_KEY}`
   }
 };
 
