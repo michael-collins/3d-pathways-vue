@@ -1,23 +1,107 @@
 <template>
-    <div>
-      <h1>{{ record.fields.Name }}</h1>
-    <p>{{ record.fields.Description }}</p>
+  <div class="grid grid-cols-5 grid-rows-5 gap-4">
+    <div class="col-span-5">
+      <div class="navbar bg-base-100">
+        <div class="max-w-xs text-sm breadcrumbs">
+          <ul class="p-2 bg-base-100 rounded-t-none">
+            <li class="btn" @click="navigateToHomePage">
+              <svg class="h-5 w-5 text-slate-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <rect x="4" y="4" width="6" height="6" rx="1" />  <rect x="14" y="4" width="6" height="6" rx="1" />  <rect x="4" y="14" width="6" height="6" rx="1" />  <rect x="14" y="14" width="6" height="6" rx="1" /></svg>            </li>
+            <li v-if="record">
+              {{ record.fields.Name }}
+            </li>
+            <li v-else>
+              ...
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </template>
+    <div v-if="record && record.fields" :key="record.id">
+      {{ console.log('Rendering record fields', record.fields) }}
+      <!-- Displaying the Name -->
+      <h1 v-if="record.fields.Name">{{ record.fields.Name }}</h1>
+
+      <!-- Displaying the Description -->
+      <p v-if="record.fields.description">{{ record.fields.description }}</p>
+
+      <!-- Displaying Learning Objectives -->
+      <!-- Check if 'learning objectives' exists before displaying -->
+      <p v-if="record.fields['learning objectives']">{{ record.fields['learning objectives'] }}</p>
+
+      <!-- Displaying Examples -->
+      <!-- Check if 'examples' exists before displaying -->
+      <p v-if="record.fields.examples">{{ record.fields.examples }}</p>
+
+      <!-- Displaying Competencies -->
+      <!-- Assuming competencies are an array. Check if it exists and is non-empty before iterating -->
+      <div v-if="record.fields.competencies && record.fields.competencies.length">
+        <div v-for="(competency, index) in record.fields.competencies" :key="'competency-' + index">
+          <p>{{ competency }}</p>
+        </div>
+      </div>
+
+      <!-- Displaying Exercises -->
+      <!-- Assuming exercises are an array. Check if it exists and is non-empty before iterating -->
+      <div v-if="record.fields.exercises && record.fields.exercises.length">
+        <div v-for="(exercise, index) in record.fields.exercises" :key="'exercise-' + index">
+          <p>{{ exercise }}</p>
+    </div>
+  </div>
+</div>
+<div v-else>
+  <!-- Fallback content or loading message -->
+  <p>Record loading or not available...</p>
+</div>
+
+    <!-- <div class="col-span-5 row-span-3 row-start-2">
+      <div v-if="record">
+        <h1>{{ record.fields.Name }}</h1>
+        <p>{{ record.fields.description }}</p> 
+        <hr>
+        <p v-for="(objective, index) in record.fields['learning objectives']" :key="index">{{ objective }}</p>
+        <p>{{ record.fields.exercises }}</p>
+        <p>{{ record.fields['fields of practice'] }}</p>
+        <p v-for="(example, index) in record.fields.examples" :key="index">{{ example }}</p>
+        <p>{{ record.fields.competencies }}</p>
+      </div>
+      <div v-else>
+        <p>Loading...</p>
+      </div>
+    </div> -->
+  </div>
+</template>
+
+<script>
+import AirtableService from '@/services/AirtableService';
+
+export default {
+  // props: ['record'], // Define the prop to accept the record data passed from HomePage.vue
+  // mounted() {
+  // },
+  methods: {
+    navigateToHomePage() {
+      // Navigate back to the homepage view
+      this.$router.push({ name: 'HomePage' });
+    }
+  },
   
-  <script>
-  import AirtableService from '@/services/AirtableService';
-  
-  export default {
-    data() {
-      return {
-        record: {},
-      };
-    },
-    async mounted() {
-      const recordId = this.$route.params.id;
-      const data = await AirtableService.getRecordById(recordId);
-      this.record = data;
-    },
-  };
-  </script>
+  // data() {
+  //   return {
+  //     record: null,
+  //   };
+  // },
+  async created() {
+  const recordId = this.$route.params.id;
+  console.log('Fetching record with ID:', recordId);
+  try {
+    const response = await AirtableService.getRecordById(recordId);
+    console.log('Response from getRecordById:', response);
+    // Directly assign the fetched response to this.record
+    this.record = response; // Corrected assignment
+    console.log('Fetched record:', this.record);
+  } catch (error) {
+    console.error('Error fetching record:', error);
+  }
+},
+};
+</script>

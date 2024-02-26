@@ -17,7 +17,13 @@ export default {
       console.error(error);
     }
   },
-  // async getLinkedRecords(recordId) {
-  //   // Implement fetching linked records based on recordId
-  // }
+  
+  async getRecordById(recordId) {
+    try {
+      const response = await axios.get(`${baseURL}/pathways/${recordId}`, config);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 };
