@@ -1,8 +1,9 @@
 <template>
-  <div class="grid grid-cols-5 grid-rows-5 gap-4">
-    <div class="col-span-5">
+  <div class="container p-3">
+
+
       <div class="navbar bg-base-100">
-        <div class="max-w-xs text-sm breadcrumbs">
+        <div class=" text-sm breadcrumbs">
           <ul class="p-2 bg-base-100 rounded-t-none">
             <li class="btn" @click="navigateToHomePage">
               <svg class="h-5 w-5 text-primary"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M9 13l-4 -4l4 -4m-4 4h11a4 4 0 0 1 0 8h-1" /></svg>
@@ -18,6 +19,9 @@
         </div>
       </div>
     </div>
+    
+    <hr>
+    <div class="container p-3">
     <div v-if="record && record.fields" :key="record.id">
       {{ console.log('Rendering record fields', record.fields) }}
       <!-- Displaying the Name -->
@@ -54,23 +58,8 @@
   <!-- Fallback content or loading message -->
   <p>Record loading or not available...</p>
 </div>
+</div>
 
-    <!-- <div class="col-span-5 row-span-3 row-start-2">
-      <div v-if="record">
-        <h1>{{ record.fields.Name }}</h1>
-        <p>{{ record.fields.description }}</p> 
-        <hr>
-        <p v-for="(objective, index) in record.fields['learning objectives']" :key="index">{{ objective }}</p>
-        <p>{{ record.fields.exercises }}</p>
-        <p>{{ record.fields['fields of practice'] }}</p>
-        <p v-for="(example, index) in record.fields.examples" :key="index">{{ example }}</p>
-        <p>{{ record.fields.competencies }}</p>
-      </div>
-      <div v-else>
-        <p>Loading...</p>
-      </div>
-    </div> -->
-  </div>
 </template>
 
 <script>
@@ -92,6 +81,11 @@ export default {
   //     record: null,
   //   };
   // },
+  data() {
+  return {
+    record: null, // Initialize record to null
+  };
+},
   async created() {
   const recordId = this.$route.params.id;
   console.log('Fetching record with ID:', recordId);
