@@ -1,9 +1,9 @@
 <template>
-    <div :class="['flex flex-col p-3 border mx-2 rounded-lg border-base-300 bg-base-200', { 'collapse-open': isOpen }]">
-      <div @click="toggle" class="cursor-pointer text-base-content text-xl p-2">
+    <div :class="['flex flex-col p-3 border rounded-lg border-base-300 bg-base-200', { 'collapse-open': isOpen }]">
+      <div @click="toggle" class="cursor-pointer collapse-plus text-base-content text-xl p-2">
         <slot name="header"></slot>
       </div>
-      <div v-show="isOpen" class="join join-vertical w-full">
+      <div v-show="isOpen" class="join join-vertical w-full m-2">
         <slot name="body"></slot>
       </div>
     </div>
