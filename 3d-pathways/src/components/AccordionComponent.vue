@@ -1,14 +1,14 @@
 <template>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10">
-    <AccordionItem v-for="record in records" :key="record.id" :initiallyOpen="true">
+    <AccordionItem v-for="record in records" :key="record.id" :initiallyOpen="false">
       <template v-slot:header>
         <div class="navbar">
           <h2 class="font-bold flex-1 ">{{ record.fields.Name }}
           
         </h2>
-        <button class="btn flex-none uppercase text-xs bg-base-100" @click="navigateToRecordDetail(record.id)">
+        <button class="btn btn-outline flex-none uppercase text-xs" @click="navigateToRecordDetail(record.id)">
           View
-          <svg class="h-5 w-5 text-primary"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />  <circle cx="12" cy="12" r="3" /></svg>        </button>
+          <svg class="h-5 w-5 "  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />  <circle cx="12" cy="12" r="3" /></svg>        </button>
       </div>
       </template>
       <template v-slot:body>
