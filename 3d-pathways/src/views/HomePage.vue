@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-base-200">
     <card-component card-component :records="records"></card-component>
     <!-- <accordion-component accordion-component :records="records"></accordion-component> -->
   </div>
