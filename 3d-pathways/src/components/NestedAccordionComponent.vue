@@ -2,7 +2,7 @@
   <div>
     <div v-for="detail in details" :key="detail.id">
       <!-- Display details here -->
-      {{ detail.fields.Name }}
+      {{ detail.fields.name }}
     </div>
   </div>
 </template>

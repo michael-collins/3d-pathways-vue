@@ -3,12 +3,13 @@
     <AccordionItem v-for="record in records" :key="record.id" :initiallyOpen="false">
       <template v-slot:header>
         <div class="navbar">
-          <h2 class="font-bold flex-1 ">{{ record.fields.Name }}
+          <h2 class="font-bold flex-1 ">{{ record.fields.name }}
           
         </h2>
         <button class="btn btn-ghost hover:btn-outline flex-none uppercase text-xs" @click="navigateToRecordDetail(record.id)">
           View
-          <svg class="h-5 w-5 "  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />  <circle cx="12" cy="12" r="3" /></svg>        </button>
+          <svg class="h-5 w-5 "  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />  <circle cx="12" cy="12" r="3" /></svg>
+        </button>
       </div>
       </template>
       <template v-slot:body>
@@ -39,7 +40,7 @@ export default {
       return [
         { key: 'learning objectives', title: 'Learning Objectives' },
         { key: 'exercises', title: 'Exercises' },
-        { key: 'fields of practice', title: 'Fields of Practice' },
+        { key: 'roles', title: 'Fields of Practice' },
         { key: 'examples', title: 'Examples' },
         { key: 'competencies', title: 'Competencies' },
       ];

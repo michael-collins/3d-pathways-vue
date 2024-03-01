@@ -17,7 +17,22 @@ export default {
       console.error(error);
     }
   },
-  
+  async getExerciseById(exerciseId) {
+    try {
+      const response = await axios.get(`${baseURL}/exercises/${exerciseId}`, config);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching exercise:', error);
+    }
+  },
+  async getCompetencyById(competencyId) {
+    try {
+      const response = await axios.get(`${baseURL}/competencies/${competencyId}`, config);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching competency:', error);
+    }
+  },
   async getRecordById(recordId) {
     try {
       const response = await axios.get(`${baseURL}/pathways/${recordId}`, config);

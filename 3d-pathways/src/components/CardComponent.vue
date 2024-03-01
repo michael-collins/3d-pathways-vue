@@ -1,26 +1,63 @@
 <template>
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-6">
-            <h5 class="card-title">{{ record.fields.Name }}</h5>
-            <p class="card-text">{{ record.fields.Description }}</p>
+    <!-- Card Section -->
+    <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+      <!-- Grid -->
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+        <!-- Card -->
+        <a @click="navigateToRecordDetail(record.id)" v-for="record in records" :key="record.id" class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-slate-900 dark:border-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+          <div class="p-4 md:p-5">
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="group-hover:text-blue-600 font-semibold text-gray-800 dark:group-hover:text-gray-400 dark:text-gray-200">
+                  {{ record.fields.name }}
+                </h3>
+                <p class="text-sm text-gray-500">
+                  {{ record.fields.description }}
+                </p>
+              </div>
+              <button class="btn btn-ghost hover:btn-outline flex-none uppercase text-xs" >
+                View
+                <svg class="h-5 w-5 "  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />  <circle cx="12" cy="12" r="3" /></svg>
+              </button>
+            </div>
           </div>
-          <div class="col-md-6">
-            <AccordionComponent :recordDetails="record"></AccordionComponent>
-          </div>
-        </div>
-      </div>
-    </div>
+        </a>
+        <!-- End Card -->
+  </div>
+  <!-- End Grid -->
+</div>
+<!-- End Card Section -->
+
   </template>
   
   <script>
-   import AccordionComponent from '@/components/AccordionComponent';
+  
   export default {
-    props: ['record'],
     components: {
-     AccordionComponent
-  }
+    },
+    props: ['records'],
+    // computed: {
+    //   recordDetails() {
+    //     return [
+    //       { key: 'learning objectives', title: 'Learning Objectives' },
+    //       { key: 'exercises', title: 'Exercises' },
+    //       { key: 'roles', title: 'Fields of Practice' },
+    //       { key: 'examples', title: 'Examples' },
+    //       { key: 'competencies', title: 'Competencies' },
+    //     ];
+    //   },
+    // },
+    methods: {
+      
+      navigateToRecordDetail(recordId) {
+        this.$router.push({
+          name: 'RecordDetail',
+          params: { id: recordId },
+        });
+      },
+    },
   };
   </script>
+  
+  
   

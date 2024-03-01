@@ -1,16 +1,19 @@
 <template>
   <div>
-    <accordion-component accordion-component :records="records"></accordion-component>
+    <card-component card-component :records="records"></card-component>
+    <!-- <accordion-component accordion-component :records="records"></accordion-component> -->
   </div>
 </template>
 
 <script>
-import AccordionComponent from '@/components/AccordionComponent.vue';
+// import AccordionComponent from '@/components/AccordionComponent.vue';
+import CardComponent from '@/components/CardComponent.vue';
 import AirtableService from '@/services/AirtableService';
 
 export default {
   components: {
-    'accordion-component': AccordionComponent
+    'card-component': CardComponent,
+    // 'accordion-component': AccordionComponent
   },
   data() {
     return {
@@ -23,10 +26,10 @@ export default {
     const testRecord = {
       id: 'testRecord',
       fields: {
-        Name: 'Test Record Name',
+        name: 'Test Record Name',
         'learning objectives': 'Test learning objectives',
         exercises: 'Test exercises',
-        'fields of practice': 'Test fields of practice',
+        roles: 'A roles, a second role',
         examples: 'Test examples',
         competencies: 'Test competencies',
       },
