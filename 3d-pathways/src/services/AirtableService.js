@@ -18,13 +18,16 @@ export default {
     }
   },
   async getExerciseById(exerciseId) {
+    console.log(`Fetching exercise with ID: ${exerciseId}`); // Log the ID being used
     try {
       const response = await axios.get(`${baseURL}/exercises/${exerciseId}`, config);
+      console.log(`Response for exercise ${exerciseId}:`, response.data); // Log the response
       return response.data;
     } catch (error) {
-      console.error('Error fetching exercise:', error);
+      console.error(`Error fetching exercise ${exerciseId}:`, error);
     }
   },
+
   async getCompetencyById(competencyId) {
     try {
       const response = await axios.get(`${baseURL}/competencies/${competencyId}`, config);
@@ -33,6 +36,7 @@ export default {
       console.error('Error fetching competency:', error);
     }
   },
+
   async getRecordById(recordId) {
     try {
       const response = await axios.get(`${baseURL}/pathways/${recordId}`, config);

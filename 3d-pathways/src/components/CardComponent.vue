@@ -51,7 +51,7 @@
       
       navigateToRecordDetail(recordId) {
         this.$router.push({
-          name: 'RecordDetail',
+          name: 'PathwayDetail',
           params: { id: recordId },
         });
       },

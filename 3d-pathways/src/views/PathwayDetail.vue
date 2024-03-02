@@ -4,9 +4,9 @@
     <div class="navbar bg-base-100 border-b-2 border-base-300">
       <div class=" text-sm breadcrumbs">
         <ul class="p-2 bg-base-100 rounded-t-none">
-          <li class="btn btn-ghost hover:btn-outline uppercase text-xs" @click="navigateToHomePage">
+          <li >
             <svg class="h-5 w-5 "  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="12" cy="12" r="4" />  <line x1="1.05" y1="12" x2="7" y2="12" />  <line x1="17.01" y1="12" x2="22.96" y2="12" /></svg>
-          Pathways
+          <span @click="navigateToHomePage" class="ml-3 hover:underline no-underline cursor-pointer">Pathways</span>
           </li>
           <li v-if="record">
             {{ record.fields.name }}
@@ -51,10 +51,12 @@
       <!-- Displaying Exercises -->
       <div v-if="record.fields.exerciseDetails && record.fields.exerciseDetails.length" class="py-8">
           <h2 class="text-2xl font-semibold mb-2 text-center uppercase">Exercises:</h2>
+          
           <div class="space-y-3">
             <div v-for="(exerciseDetail, index) in record.fields.exerciseDetails" :key="'exerciseDetail-' + index" class="p-4 bg-base-200 rounded-box">
               <h3 class="text-lg font-semibold normal-case">{{ exerciseDetail.name }}</h3>
               <p class="text-sm p-3">{{ exerciseDetail.description }}</p>
+              <a class="btn" @click="navigateToExerciseDetail(exerciseDetail.id)">View</a>
               <div v-if="exerciseDetail.difficulty && exerciseDetail.difficulty.length" class="pt-8">
                 <ul class="">
                   <li v-for="(difficulty, index) in exerciseDetail.difficulty" :key="index" class="badge badge-outline text-xs m-1 uppercase">
@@ -103,10 +105,11 @@ export default {
   },
   async created() {
     const recordId = this.$route.params.id;
+    console.log("Exercise ID from route:", this.$route.params.id);
     try {
       // Fetch the main record
-      const pathwayResponse = await AirtableService.getRecordById(recordId);
-      this.record = pathwayResponse;
+      const recordResponse = await AirtableService.getRecordById(recordId);
+      this.record = recordResponse;
 
       // Check if there are exercises to fetch details for
       if (this.record.fields.exercises && this.record.fields.exercises.length > 0) {
@@ -118,7 +121,10 @@ export default {
 
         // Store fetched exercise details in a new property
         // Note: Adjust access based on the actual structure of your response
-        this.record.fields.exerciseDetails = exerciseDetails.map(ex => ex.fields); // Assuming each response has a 'fields' property with the data
+        this.record.fields.exerciseDetails = exerciseDetails.map(ex => ({
+          id: ex.id, // Keep the ID
+          ...ex.fields // Spread the fields
+        }));
       }
       
     // Fetch details for each competency
@@ -127,19 +133,6 @@ export default {
         AirtableService.getCompetencyById(competencyId)
       );
       const competencies = await Promise.all(competencyDetailsPromises);
-
-      // For each competency, fetch the associated pathway's name
-      // for (let competency of competencies) {
-      //   if (competency.fields.pathways) {
-      //     // Assuming `pathways` is an array of IDs. Adjust based on your data structure.
-      //     const pathwayNamesPromises = competency.fields.pathways.map(pathwayId =>
-      //       AirtableService.getRecordById(pathwayId) // Reuse getRecordById to fetch pathway details
-      //     );
-      //     const pathways = await Promise.all(pathwayNamesPromises);
-      //     // Store the pathway names (and IDs for linking) back in the competency object
-      //     competency.fields.pathwayDetails = pathways.map(p => ({ id: p.id, name: p.fields.Name }));
-      //   }
-      // }
 
       // Store fetched competency details with pathway info
       this.record.fields.competencyDetails = competencies.map(c => c.fields);
@@ -152,8 +145,12 @@ export default {
     navigateToHomePage() {
       this.$router.push({ name: 'HomePage' });
     },
-    navigateToRecordDetail(recordId) {
-    this.$router.push({ name: 'RecordDetail', params: { id: recordId } });
+    navigateToPathwayDetail(recordId) {
+    this.$router.push({ name: 'PathwayDetail', params: { id: recordId } });
+    },
+    navigateToExerciseDetail(exerciseId) {
+      console.log("Navigating to Exercise Detail with ID:", exerciseId);
+      this.$router.push({ name: 'ExerciseDetail', params: { id: exerciseId } });
     }
   },
 };
