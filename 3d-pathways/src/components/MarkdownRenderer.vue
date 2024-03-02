@@ -1,24 +1,14 @@
 <template>
-    <div v-html="markdown.render(source)" />
+     <!-- special style child selectors from tailwind.config.js -->
+    <div class="markdown 
+    child-list-ol:list-decimal 
+    child-list-ol-li-ul:list-disc 
+    child-list-ol-li-ul:px-4 
+    child-list-ol-li-ul:py-y 
+    child-list-ol-li:p-1" v-html="markdown.render(source)" />
 
-    <style scoped>
-        /* Override Tailwind CSS styles for lists */
-        ol {
-            list-style: decimal;
-            margin: 0;
-            padding: 0;
-        }
-        li {
-            list-style: disc;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
 </template>
 
-
-  
-  
 
   <script>
   import MarkdownIt from "markdown-it";
