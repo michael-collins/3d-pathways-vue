@@ -4,9 +4,9 @@
     child-list-ol:list-decimal 
     child-list-ol-li-ul:list-disc 
     child-list-ol-li-ul:list-inside 
-    child-list-ol-li-ul:px-4 
-    child-list-ol-li-ul:py-1 
-    child-list-ol-li:p-1 " v-html="markdown.render(source)" />
+    child-list-ol-li-ul:my-2 
+    child-list-ol-li:my-1
+   " v-html="markdown.render(source)" />
 
 </template>
 

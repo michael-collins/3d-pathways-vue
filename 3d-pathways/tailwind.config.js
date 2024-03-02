@@ -10,7 +10,7 @@ module.exports = {
     require("@tailwindcss/typography"),
     require("daisyui"),
     plugin(function({ addVariant }) {addVariant('child-list-ol', '&>ol')}),
-    plugin(function({ addVariant }) {addVariant('child-list-ol-li', '&>ul>li')}),
+    plugin(function({ addVariant }) {addVariant('child-list-ol-li', '&>ol>li')}),
     plugin(function({ addVariant }) {addVariant('child-list-ol-li-ul', '&>ol>li>ul')}),
     plugin(function({ addVariant }) {addVariant('child-list-ol-li-ul-li', '&>ol>li>ul>li')})
 ],
