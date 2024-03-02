@@ -32,12 +32,14 @@
         <p v-if="record.fields.learningObjectives" class="text-md p-3">{{ record.fields.learningObjectives }}</p>
 
         <!-- Displaying the Instructions -->
+        <h2  v-if="record.fields.instructions" class="text-2xl font-semibold mb-2 text-left uppercase ">Instructions:</h2>
         <p v-if="record.fields.instructions" class="text-md p-3">
           <MarkdownRenderer :source="record.fields.instructions" />
         </p>
 
 
         <!-- Displaying the YouTube Playlist -->
+        <h2  v-if="record.fields.youtubePlaylist" class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
         <p v-if="record.fields.youtubePlaylist" class="text-md p-3">
           <a :href="record.fields.youtubePlaylist" target="_blank">{{ record.fields.youtubePlaylist }}</a>
         </p>
