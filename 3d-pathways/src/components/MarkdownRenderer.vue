@@ -5,7 +5,6 @@
     child-list-ol-li-ul:list-disc 
     child-list-ol-li-ul:list-inside 
     child-list-ol-li-ul:px-4 
-    child-list-ol-li-ul:list-inside 
     child-list-ol-li-ul:py-1 
     child-list-ol-li:p-1 " v-html="markdown.render(source)" />
 
