@@ -4,15 +4,14 @@
     <div class="navbar bg-base-100 border-b-2 border-base-300">
       <div class="text-sm breadcrumbs">
         <ul class="p-2 bg-base-100 rounded-t-none">
-          <li >
-            <svg class="h-5 w-5 "  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="12" cy="12" r="4" />  <line x1="1.05" y1="12" x2="7" y2="12" />  <line x1="17.01" y1="12" x2="22.96" y2="12" /></svg>
-          <span @click="navigateToHomePage" class="ml-3 hover:underline no-underline cursor-pointer">Pathways</span>
+          <li>
+            <router-link to="/" class="ml-3 hover:underline">Pathways</router-link>
           </li>
           <li>
-            <span @click="navigateToExercisesList" class="hover:underline no-underline cursor-pointer">Exercises</span>
+            <router-link to="/exercises" class="hover:underline">Exercises</router-link>
           </li>
           <li v-if="record">
-            {{ record.fields.name }}
+            <span class="font-semibold">{{ record.fields.name }}</span>
           </li>
           <li v-else>
             ...
@@ -24,57 +23,66 @@
     <div class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
       <div v-if="record && record.fields" :key="record.id" class="space-y-6">
         <!-- Displaying the Name -->
-        <h1 v-if="record.fields.name" class="text-5xl font-bold">
-          {{ record.fields.name }}
-        </h1>
+        <h1 v-if="record.fields.name" class="text-5xl font-bold">{{ record.fields.name }}</h1>
 
         <!-- Displaying the Description -->
-        <p v-if="record.fields.description" class="text-md p-3">
-          {{ record.fields.description }}
+        <p v-if="record.fields.description" class="text-md p-3">{{ record.fields.description }}</p>
+
+        <!-- Displaying the Learning Objectives -->
+        <p v-if="record.fields.learningObjectives" class="text-md p-3">{{ record.fields.learningObjectives }}</p>
+
+        <!-- Displaying the Instructions -->
+        <p v-if="record.fields.instructions" class="text-md p-3">
+          <MarkdownRenderer :source="record.fields.instructions" />
         </p>
 
-        <!-- Displaying Roles (Fields of Practice) -->
-        <div v-if="record.fields.roles && record.fields.roles.length" class="py-8">
-          <h2 class="text-2xl font-semibold mb-2 text-center uppercase">Fields of practice:</h2>
-          <ul class="text-center">
-            <li v-for="(role, index) in record.fields.roles" :key="index" class="badge badge-primary p-3 m-1">
-              {{ role }}
+
+        <!-- Displaying the YouTube Playlist -->
+        <p v-if="record.fields.youtubePlaylist" class="text-md p-3">
+          <a :href="record.fields.youtubePlaylist" target="_blank">{{ record.fields.youtubePlaylist }}</a>
+        </p>
+
+        <!-- Displaying the Downloads -->
+        <p v-if="record.fields.downloads" class="text-md p-3">
+          <ul>
+            <li v-for="download in record.fields.downloads" :key="download.id">
+              <a :href="download.url">{{ download.name }}</a>
             </li>
           </ul>
-        </div>
-
-        <!-- Displaying Examples -->
-        <div v-if="record.fields.examples" class="">
-          <h2 class="text-2xl font-semibold uppercase text-center">Examples:</h2>
-          <div class="p-3" v-html="record.fields.examples"></div>
-        </div>
+        </p>
       </div>
+
       <div v-else class="text-center">
         <p class="text-lg">Record loading or not available...</p>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import AirtableService from '@/services/AirtableService';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
+
 
 export default {
+  components: {
+    MarkdownRenderer,
+  },
   data() {
     return {
-      record: null, // Initialize record to null
+      record: null,
     };
   },
   async created() {
-  const exerciseId = this.$route.params.id;
-  try {
-    const exerciseResponse = await AirtableService.getExerciseById(exerciseId);
-    // Assuming exerciseResponse correctly unpacks to the expected format
-    this.record = exerciseResponse; // Adjust based on your data structure
-    console.log("Processed Record:", this.record); // Log the processed record
-  } catch (error) {
-    console.error('Error fetching exercise:', error);
-  }
-},
+    const exerciseId = this.$route.params.id;
+    try {
+      const exerciseResponse = await AirtableService.getExerciseById(exerciseId);
+      this.record = exerciseResponse;
+      console.log("Processed Record:", this.record);
+    } catch (error) {
+      console.error('Error fetching exercise:', error);
+    }
+  },
   methods: {
     navigateToHomePage() {
       this.$router.push({ name: 'HomePage' });

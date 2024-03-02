@@ -9,7 +9,7 @@
           <span @click="navigateToHomePage" class="ml-3 hover:underline no-underline cursor-pointer">Pathways</span>
           </li>
           <li>
-            <span class="no-underline">Exercises</span>
+            <span class="font-semibold">Exercises</span>
           </li>
         </ul>
       </div>

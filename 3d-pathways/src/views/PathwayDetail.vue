@@ -9,7 +9,7 @@
           <span @click="navigateToHomePage" class="ml-3 hover:underline no-underline cursor-pointer">Pathways</span>
           </li>
           <li v-if="record">
-            {{ record.fields.name }}
+            <span class="font-semibold">{{ record.fields.name }}</span>
           </li>
           <li v-else>
             ...
