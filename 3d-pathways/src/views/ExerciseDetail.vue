@@ -23,6 +23,7 @@
     <div class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
       <div v-if="record && record.fields" :key="record.id" class="space-y-6">
         <!-- Displaying the Name -->
+        <img v-if="record.fields.image" :src="imageUrl" class="w-full h-auto" />
         <h1 v-if="record.fields.name" class="text-5xl font-bold">{{ record.fields.name }}</h1>
 
         <!-- Displaying the Description -->
@@ -80,7 +81,13 @@ export default {
     try {
       const exerciseResponse = await AirtableService.getExerciseById(exerciseId);
       this.record = exerciseResponse;
-      console.log("Processed Record:", this.record);
+
+      // Assuming record.fields.image holds the image object array
+      if (this.record.fields.image && this.record.fields.image.length > 0) {
+        // Access the URL of the first image object in the array
+        this.imageUrl = this.record.fields.image[0].url;
+        console.log("Image URL:", this.imageUrl);
+      }
     } catch (error) {
       console.error('Error fetching exercise:', error);
     }
