@@ -9,9 +9,17 @@ const config = {
 };
 
 export default {
-  async getRecords() {
+  async getPathwayRecords() {
     try {
       const response = await axios.get(`${baseURL}/pathways`, config);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  async getExerciseRecords() {
+    try {
+      const response = await axios.get(`${baseURL}/exercises`, config);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -37,7 +45,7 @@ export default {
     }
   },
 
-  async getRecordById(recordId) {
+  async getPathwayRecordById(recordId) {
     try {
       const response = await axios.get(`${baseURL}/pathways/${recordId}`, config);
       return response.data;

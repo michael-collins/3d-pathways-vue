@@ -1,8 +1,9 @@
 <template>
   <div class=" p-3">
+    <NavBar />
     <!-- Breadcrumbs -->
-    <div class="navbar bg-base-100 border-b-2 border-base-300">
-      <div class=" text-sm breadcrumbs">
+   
+      <!-- <div class="text-sm breadcrumbs ml-8">
         <ul class="p-2 bg-base-100 rounded-t-none">
           <li >
             <svg class="h-5 w-5 "  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="12" cy="12" r="4" />  <line x1="1.05" y1="12" x2="7" y2="12" />  <line x1="17.01" y1="12" x2="22.96" y2="12" /></svg>
@@ -15,8 +16,9 @@
             ...
           </li>
         </ul>
-      </div>
-    </div>
+      </div> -->
+
+
   </div>
     
   <div class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
@@ -96,8 +98,15 @@
 
 <script>
 import AirtableService from '@/services/AirtableService';
+// import ToggleDarkButton from '@/components/ToggleDarkButton';
+import NavBar from '@/components/NavBar';
 
 export default {
+  components: {
+    // 'ToggleDarkButton': ToggleDarkButton,
+    'NavBar': NavBar
+    // 'accordion-component': AccordionComponent
+  },
   data() {
     return {
       record: null, // Initialize record to null
@@ -108,7 +117,7 @@ export default {
     console.log("Exercise ID from route:", this.$route.params.id);
     try {
       // Fetch the main record
-      const recordResponse = await AirtableService.getRecordById(recordId);
+      const recordResponse = await AirtableService.getPathwayRecordById(recordId);
       this.record = recordResponse;
 
       // Check if there are exercises to fetch details for
@@ -149,8 +158,17 @@ export default {
     this.$router.push({ name: 'PathwayDetail', params: { id: recordId } });
     },
     navigateToExerciseDetail(exerciseId) {
-      console.log("Navigating to Exercise Detail with ID:", exerciseId);
-      this.$router.push({ name: 'ExerciseDetail', params: { id: exerciseId } });
+      // Pass the pathway's name and URL as query parameters when navigating
+      const pathwayName = this.record.fields.name;
+      const pathwayPageUrl = this.$route.path; // Get the current URL
+      this.$router.push({ 
+        name: 'ExerciseDetail',
+        query: { 
+          id: exerciseId,
+          pathwayName: pathwayName,
+          pathwayPageUrl: pathwayPageUrl
+        }
+      });
     }
   },
 };
